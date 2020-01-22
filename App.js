@@ -1,19 +1,22 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react'
+import { View } from 'react-native'
+import { createAppContainer } from 'react-navigation'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
+import DeckList from './components/DeckList'
+import NewDeck from './components/NewDeck'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Mobile Flashcards</Text>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+const Tabs = createBottomTabNavigator({
+  Decks: DeckList,
+  AddDeck: NewDeck,
 });
+const TabsContainer = createAppContainer(Tabs)
+
+export default class App extends Component {
+  render () {
+    return (
+      <View style={{flex: 1}}>
+        <TabsContainer />
+      </View>
+    )
+  }
+}

@@ -1,0 +1,5 @@
+export const blue = '#022B3A'
+export const seaweed = '#1F7A8C'
+export const aqua = '#BFDBF7'
+export const darkWhite = '#E1E5F2'
+export const white = '#FFFFFF'

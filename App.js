@@ -1,21 +1,23 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
-import { createAppContainer } from 'react-navigation'
-import { createBottomTabNavigator } from 'react-navigation-tabs'
-import DeckList from './components/DeckList'
-import NewDeck from './components/NewDeck'
+import { View, StatusBar } from 'react-native'
+import Constants from 'expo-constants'
 
-const Tabs = createBottomTabNavigator({
-  Decks: DeckList,
-  AddDeck: NewDeck,
-});
-const TabsContainer = createAppContainer(Tabs)
+import Navigation from './components/Navigation'
+
+function CustomStatusBar ({ backgroundColor, ...props }) {
+  return (
+    <View style={{backgroundColor, height: Constants.statusBarHeight }} >
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  )
+}
 
 export default class App extends Component {
   render () {
     return (
       <View style={{flex: 1}}>
-        <TabsContainer />
+        <CustomStatusBar backgroundColor={'purple'} barStyle='Light-content' />
+        <Navigation />
       </View>
     )
   }

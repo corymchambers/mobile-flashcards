@@ -1,34 +1,40 @@
 import React, { Component } from 'react'
 import { View, Text, Button } from 'react-native'
+import { connect } from 'react-redux'
+import { AppLoading } from 'expo'
+
+import { getDecks } from '../utils/api'
+import { receiveDecks } from '../actions'
 
 class DeckList extends Component {
+  state = {
+    ready: false
+  }
+  componentDidMount () {
+    const { dispatch } = this.props
+
+    getDecks()
+      .then((decks) => dispatch(receiveDecks(decks)))
+      .then(() => this.setState(() => ({
+        ready: true
+      })))
+  }
+
   render() {
+    const { decks } = this.props
+    const { ready } = this.props
+
+    if (ready === false) {
+      return <AppLoading />
+    }
+
     return (
       <View>
         <Text>Deck List</Text>
-        <Button
-          title="Go to Quiz"
-          onPress={() => this.props.navigation.navigate('Quiz')}
-        />
-        <Button
-          title="Go to Add Deck"
-          onPress={() => this.props.navigation.navigate('AddDeck')}
-        />
-        <Button
-          title="Go to Add Question"
-          onPress={() => this.props.navigation.navigate('AddQuestion')}
-        />
-        <Button
-          title="Go to Deck"
-          onPress={() => this.props.navigation.navigate('Deck')}
-        />
-        <Button
-          title="Go to Deck List"
-          onPress={() => this.props.navigation.navigate('DeckList')}
-        />
+        {decks}
       </View>
     )
   }
 }
 
-export default DeckList
+export default connect()(DeckList)

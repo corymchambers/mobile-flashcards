@@ -1,5 +1,5 @@
-const RECEIVE_DECKS = 'RECEIVE_DECKS'
-const ADD_DECK = 'ADD_DECK'
+export const RECEIVE_DECKS = 'RECEIVE_DECKS'
+export const ADD_DECK = 'ADD_DECK'
 
 export function receiveDecks (decks) {
   return {
@@ -11,7 +11,6 @@ export function receiveDecks (decks) {
 export function addDeck (title) {
 
   // need to update to async storage
-  
   return {
     type: ADD_DECK,
     title

@@ -31,10 +31,26 @@ class DeckList extends Component {
     return (
       <View>
         <Text>Deck List</Text>
-        {decks}
+        <View>
+          {Object.values(decks).map((deck) => {
+
+            return (
+              <View key={deck.title}>
+                <Text>{deck.title}</Text>
+                <Text>{deck.questions.length} cards</Text>
+              </View>
+            )
+        })}
+        </View>
       </View>
     )
   }
 }
 
-export default connect()(DeckList)
+function mapStateToProps (decks) {
+  return {
+    decks
+  }
+}
+
+export default connect(mapStateToProps)(DeckList)

@@ -1,4 +1,4 @@
-import { RECEIVE_DECKS, ADD_DECK } from '../actions'
+import { RECEIVE_DECKS, ADD_DECK, ADD_QUESTION } from '../actions'
 
 function decks (state = {}, action) {
   switch (action.type) {
@@ -8,9 +8,33 @@ function decks (state = {}, action) {
         ...action.decks
       }
     case ADD_DECK:
+      const newDeck = {
+        [action.title]: {
+          questions: [],
+          title: action.title
+        }
+      }
       return {
         ...state,
-        ...action.title
+        ...newDeck
+      }
+    case ADD_QUESTION:
+      const newQuestion = {
+        question: action.question,
+        answer: action.answer
+      }
+      const title = action.title
+      const mergedQuestions = state[title].questions.concat(newQuestion)
+
+      const updatedDeck = {
+        [title] : {
+          questions: mergedQuestions,
+          title: title
+        }
+      }
+      return {
+        ...state,
+        ...updatedDeck
       }
     default:
       return state

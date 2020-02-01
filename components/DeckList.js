@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { AppLoading } from 'expo'
 
@@ -21,8 +21,7 @@ class DeckList extends Component {
   }
 
   render() {
-    const { decks } = this.props
-    const { ready } = this.props
+    const { decks, ready } = this.props
 
     if (ready === false) {
       return <AppLoading />
@@ -36,8 +35,10 @@ class DeckList extends Component {
 
             return (
               <View key={deck.title}>
-                <Text>{deck.title}</Text>
-                <Text>{deck.questions.length} cards</Text>
+                <TouchableOpacity onPress={() => {this.props.navigation.navigate('Deck', {deckId: deck.title})}}>
+                  <Text>{deck.title}</Text>
+                  <Text>{deck.questions.length} cards</Text>
+                </TouchableOpacity>
               </View>
             )
         })}

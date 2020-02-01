@@ -3,7 +3,6 @@ import { View, Text, Button, TextInput } from 'react-native'
 import { connect } from 'react-redux'
 
 import { setDeckTitle } from '../utils/api.js'
-
 import { addDeck } from '../actions'
 
 class AddDeck extends Component {

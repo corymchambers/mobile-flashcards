@@ -2,13 +2,19 @@ import React, { Component } from 'react'
 import { View, Text, Button } from 'react-native'
 import { connect } from 'react-redux'
 
+import { deleteDeck } from '../utils/api'
+import { removeDeck } from '../actions'
+
 class Deck extends Component {
   deleteDeck = () => {
-    console.log('delete deck')
+    const { deck } = this.props
+    // deleteDeck(deck)
+    // this.props.dispatch(removeDeck(deck.title))
   }
 
   render() {
     const { deck } = this.props
+    console.log('render', deck.title)
     return (
       <View>
         <Text>{deck.title}</Text>

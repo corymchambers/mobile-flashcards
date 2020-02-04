@@ -33,7 +33,15 @@ export function addCardToDeck (title, question, answer) {
         }
       }))
     })
-  
+}
+
+export function deleteDeck (title) {
+  return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY)
+    .then((results) => {
+      const decks = JSON.parse(results)
+      const newDecks = Object.values(decks).filter(deck => deck.title !== title)
+      AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(newDecks))
+    })
 }
 
 function formatResults (results) {

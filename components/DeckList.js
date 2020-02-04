@@ -23,6 +23,8 @@ class DeckList extends Component {
   render() {
     const { decks, ready } = this.props
 
+    console.log('render')
+
     if (ready === false) {
       return <AppLoading />
     }
@@ -32,7 +34,6 @@ class DeckList extends Component {
         <Text>Deck List</Text>
         <View>
           {Object.values(decks).map((deck) => {
-
             return (
               <View key={deck.title}>
                 <TouchableOpacity onPress={() => {this.props.navigation.navigate('Deck', {deckId: deck.title})}}>
@@ -49,6 +50,7 @@ class DeckList extends Component {
 }
 
 function mapStateToProps (decks) {
+
   return {
     decks
   }

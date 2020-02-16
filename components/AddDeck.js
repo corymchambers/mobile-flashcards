@@ -14,6 +14,7 @@ class AddDeck extends Component {
     this.props.dispatch(addDeck(title))
 
     setDeckTitle(title)
+    this.props.navigation.navigate('DeckList')
   }
   textChange = (e) => {
     this.setState({title: e})

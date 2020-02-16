@@ -26,9 +26,9 @@ export function addQuestion (title, question, answer) {
   }
 }
 
-// export function removeDeck (title) {
-//   return {
-//     type: REMOVE_DECK,
-//     title
-//   }
-// }
+export function removeDeck (title) {
+  return {
+    type: REMOVE_DECK,
+    title
+  }
+}

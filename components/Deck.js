@@ -14,7 +14,6 @@ class Deck extends Component {
 
   render() {
     const { deck } = this.props
-    console.log('render', deck.title)
     return (
       <View>
         <Text>{deck.title}</Text>

@@ -14,16 +14,18 @@ class DeckList extends Component {
     const { dispatch } = this.props
 
     getDecks()
-      .then((decks) => dispatch(receiveDecks(decks)))
-      .then(() => this.setState(() => ({
-        ready: true
-      })))
+        .then((decks) => {
+            dispatch(receiveDecks(decks))
+        })
+        .then(() => this.setState(
+            () => ({
+                ready: true
+            })
+        ))
   }
 
   render() {
     const { decks, ready } = this.props
-
-    console.log('render')
 
     if (ready === false) {
       return <AppLoading />

@@ -14,6 +14,7 @@ export default function AddQuestion (props) {
   const submit = () => {
     dispatch(addQuestion(deckId, question, answer))
     addCardToDeck(deckId, question, answer)
+    props.navigation.navigate('Deck', {deckId: deckId})
   }
 
   return (

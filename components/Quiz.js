@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
+
+import { seaweed, aqua, darkWhite, blue, white } from '../utils/colors'
 
 class Quiz extends Component {
   state = {
@@ -39,35 +41,74 @@ class Quiz extends Component {
     const { deck } = this.props
     const { questionNumber, questionAnswer, correct } = this.state
 
-    if (questionNumber > deck.questions.length) {
+    if (deck.questions.length === 0) {
       return (
-        <View>
-          <Text>{correct}/{deck.questions.length}</Text>
-          <Text>{correct/deck.questions.length*100}%</Text>
-          <Button title='Restart Quiz' onPress={this.startOver} />
-          <Button title={`Back to ${deck.title}`} onPress={() => {this.props.navigation.navigate('Deck', {deckId: deck.title})}} />
+        <View style={styles.background}>
+          <View style={styles.sorryContainer}>
+            <Text style={styles.smText}>Sorry, you cannot take a quiz because there are no cards in the deck.</Text>
+          </View>
+        </View>
+      )
+    }
+
+    if (questionNumber > deck.questions.length) {
+      const correctPercentage = correct/deck.questions.length*100
+      return (
+        <View style={styles.background}>
+          <View style={styles.textContainer}>
+            <Text style={styles.lgText}>{correct}/{deck.questions.length}</Text>
+            <Text style={styles.lgText}>{correctPercentage.toFixed(2)}%</Text>
+          </View>
+          <TouchableOpacity
+            onPress={this.startOver}
+            style={styles.correctBtn}
+          >
+            <Text style={styles.text}>Restart Quiz</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {this.props.navigation.navigate('Deck', {deckId: deck.title})}}
+            style={styles.incorrectBtn}
+          >
+            <Text style={styles.text}>{`Back to ${deck.title}`}</Text>
+          </TouchableOpacity>
         </View>
       )
     }
     return (
-      <View>
-        <Text>{questionNumber}/{deck.questions.length}</Text>
-        <View>
+      <View style={styles.background}>
+        <View style={styles.progressContainer}>
+          <Text style={styles.smText}>{questionNumber}/{deck.questions.length}</Text>
+        </View>
+        <View style={styles.textContainer}>
           {questionAnswer === 'question' && (
             <View>
-              <Text>{deck.questions[questionNumber-1].question}</Text>
-              <Button onPress={this.changeToAnswer} title='Answer'/>
+              <Text style={styles.lgText}>{deck.questions[questionNumber-1].question}</Text>
+              <TouchableOpacity onPress={this.changeToAnswer} style={styles.qaTextContainer}>
+                <Text style={styles.qaText}>Answer</Text>
+              </TouchableOpacity>
             </View>
           )}
           {questionAnswer === 'answer' && (
             <View>
-              <Text>{deck.questions[questionNumber-1].answer}</Text>
-              <Button onPress={this.changeToQuestion} title='Question'/>
-            </View>
+            <Text style={styles.lgText}>{deck.questions[questionNumber-1].answer}</Text>
+            <TouchableOpacity onPress={this.changeToQuestion} style={styles.qaTextContainer}>
+              <Text style={styles.qaText}>Question</Text>
+            </TouchableOpacity>
+          </View>
           )}
         </View>
-        <Button title='Correct' onPress={this.correct} />
-        <Button title='Incorrect' onPress={this.incorrect} />
+        <TouchableOpacity
+          onPress={this.correct}
+          style={styles.correctBtn}
+        >
+          <Text style={styles.text}>Correct</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={this.incorrect}
+          style={styles.incorrectBtn}
+        >
+          <Text style={styles.text}>Incorrect</Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -82,3 +123,64 @@ function mapStateToProps (decks, props) {
   }
 
 export default connect(mapStateToProps)(Quiz)
+
+const styles = StyleSheet.create({
+  background: {
+    backgroundColor: darkWhite,
+    flex: 1
+  },
+  progressContainer: {
+    margin: 10
+  },
+  textContainer: {
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 300
+  },
+  lgText: {
+    fontSize: 20
+  },
+  smText: {
+    fontSize: 18
+  },
+  qaTextContainer: {
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  qaText: {
+    color: blue,
+    fontSize: 12
+  },
+  correctBtn: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'gray',
+    width: 150,
+    paddingVertical: 10,
+    borderRadius: 5,
+    backgroundColor: blue,
+    marginBottom: 20
+  },
+  incorrectBtn: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'gray',
+    width: 150,
+    paddingVertical: 10,
+    borderRadius: 5,
+    backgroundColor: seaweed,
+    marginBottom: 20
+  },
+  text: {
+    color: darkWhite
+  },
+  sorryContainer: {
+    marginHorizontal: 40,
+    marginBottom: 120,
+    justifyContent: 'center',
+    flex: 1
+  }
+})

@@ -11,10 +11,11 @@ class AddDeck extends Component {
   }
   submitHandler = () => {
     const title = this.state.title
+    this.setState({title: ''})
     this.props.dispatch(addDeck(title))
 
     setDeckTitle(title)
-    this.props.navigation.navigate('DeckList')
+    this.props.navigation.navigate('Deck', {deckId: title})
   }
   textChange = (e) => {
     this.setState({title: e})
@@ -26,6 +27,7 @@ class AddDeck extends Component {
         <TextInput
           style={{backgroundColor: 'gray'}}
           onChangeText={this.textChange}
+          value={this.state.title}
         />
         <Button
           title='Create Deck'
@@ -35,6 +37,10 @@ class AddDeck extends Component {
       </View>
     )
   }
+}
+
+AddDeck.navigationOptions = {
+  headerTitle: 'Add Deck'
 }
 
 export default connect()(AddDeck)

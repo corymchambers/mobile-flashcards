@@ -8,18 +8,22 @@ import AddDeck from './AddDeck'
 import Quiz from './Quiz'
 import AddQuestion from './AddQuestion'
 import Deck from './Deck'
-import { seaweed, aqua, darkWhite } from '../utils/colors'
+import { seaweed, aqua, darkWhite, blue, white } from '../utils/colors'
 
 const Tabs = createBottomTabNavigator({
   DecksTab: {
-    screen: DeckList,
+    screen: createStackNavigator({
+      screen: DeckList
+    }),
     navigationOptions: {
       tabBarLabel: 'Decks',
       tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />
     }
   },
   AddDeckTab: {
-    screen: AddDeck,
+    screen: createStackNavigator({
+      screen: AddDeck
+    }),
     navigationOptions: {
       tabBarLabel: 'Add Deck',
       tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />
@@ -30,11 +34,11 @@ const Tabs = createBottomTabNavigator({
     headerShown: false
   },
   tabBarOptions: {
-    activeTintColor: seaweed,
-    inactiveTintColor: aqua,
+    activeTintColor: darkWhite,
+    inactiveTintColor: blue,
     style: {
       height: 56,
-      backgroundColor: darkWhite,
+      backgroundColor: white,
       shadowColor: 'rgba(0, 0, 0, 0.24)',
       shadowOffset: {
         width: 0,
@@ -47,8 +51,12 @@ const Tabs = createBottomTabNavigator({
 });
 
 const MainNavigator = createStackNavigator({
-  Home: {
-    screen: Tabs
+  Main: {
+    screen: Tabs,
+    navigationOptions: {
+    headerTitle: ''
+
+    }
   },
   Quiz: {
     screen: Quiz
@@ -63,7 +71,7 @@ const MainNavigator = createStackNavigator({
     screen: Deck
   },
   DeckList: {
-    screen: DeckList
+    screen: DeckList,
   }
 })
 

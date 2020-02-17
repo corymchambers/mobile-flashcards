@@ -35,12 +35,13 @@ export function addCardToDeck (title, question, answer) {
     })
 }
 
-export function deleteDeck (title) {
+export function deleteDeck (deck) {
   return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY)
     .then((results) => {
       const decks = JSON.parse(results)
-      const newDecks = Object.values(decks).filter(deck => deck.title !== title)
-      AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(newDecks))
+      const newDecks = decks
+      delete newDecks[deck.title]
+      AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(newDecks))
     })
 }
 

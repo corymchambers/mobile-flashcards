@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { AppLoading } from 'expo'
 
 import { getDecks } from '../utils/api'
 import { receiveDecks } from '../actions'
+import { seaweed, aqua, darkWhite, blue, white } from '../utils/colors'
 
 class DeckList extends Component {
   state = {
@@ -32,30 +33,48 @@ class DeckList extends Component {
     }
 
     return (
-      <View>
-        <Text>Deck List</Text>
-        <View>
-          {Object.values(decks).map((deck) => {
-            return (
-              <View key={deck.title}>
-                <TouchableOpacity onPress={() => {this.props.navigation.navigate('Deck', {deckId: deck.title})}}>
-                  <Text>{deck.title}</Text>
-                  <Text>{deck.questions.length} cards</Text>
-                </TouchableOpacity>
-              </View>
-            )
+      <View style={styles.container}>
+        {Object.values(decks).map((deck) => {
+          return (
+            <View style={styles.deck} key={deck.title}>
+              <TouchableOpacity onPress={() => {this.props.navigation.navigate('Deck', {deckId: deck.title})}}>
+                <Text style={styles.deckName}>{deck.title}</Text>
+                <Text style={styles.deckCount}>{deck.questions.length} cards</Text>
+              </TouchableOpacity>
+            </View>
+          )
         })}
-        </View>
       </View>
     )
   }
 }
 
-function mapStateToProps (decks) {
+DeckList.navigationOptions = {
+  headerTitle: ''
+}
 
+function mapStateToProps (decks) {
   return {
     decks
   }
 }
 
 export default connect(mapStateToProps)(DeckList)
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: darkWhite,
+    flex: 1
+  },
+  deckName: {
+    alignSelf: 'center',
+    fontSize: 30
+  },
+  deckCount: {
+    alignSelf: 'center',
+    fontSize: 12
+  },
+  deck: {
+    marginVertical: 20
+  }
+})

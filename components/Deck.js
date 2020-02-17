@@ -38,7 +38,9 @@ class Deck extends Component {
         >
           <Text style={styles.text}>Start Quiz</Text>
         </TouchableOpacity>
-        <Button title='Delete Deck' onPress={this.deleteDeck} />
+        <View style={styles.deleteBtn}>
+          <Button title='Delete Deck' onPress={this.deleteDeck} />
+        </View>
       </View>
     )
   }
@@ -110,5 +112,10 @@ const styles = StyleSheet.create({
   },
   text: {
     color: darkWhite
+  },
+  deleteBtn: {
+    width: 120,
+    alignSelf: 'center',
+    marginTop: 20
   }
 })

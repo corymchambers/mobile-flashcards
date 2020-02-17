@@ -3,7 +3,7 @@ import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 
 import { seaweed, aqua, darkWhite, blue, white } from '../utils/colors'
-
+import { clearLocalNotification, setLocalNotification } from '../utils/notifications'
 class Quiz extends Component {
   state = {
     questionNumber: 1,
@@ -53,6 +53,10 @@ class Quiz extends Component {
 
     if (questionNumber > deck.questions.length) {
       const correctPercentage = correct/deck.questions.length*100
+
+      clearLocalNotification()
+        .then(setLocalNotification)
+
       return (
         <View style={styles.background}>
           <View style={styles.textContainer}>
@@ -84,17 +88,17 @@ class Quiz extends Component {
             <View>
               <Text style={styles.lgText}>{deck.questions[questionNumber-1].question}</Text>
               <TouchableOpacity onPress={this.changeToAnswer} style={styles.qaTextContainer}>
-                <Text style={styles.qaText}>Answer</Text>
+                <Text style={styles.qaText}>Show Answer</Text>
               </TouchableOpacity>
             </View>
           )}
           {questionAnswer === 'answer' && (
             <View>
-            <Text style={styles.lgText}>{deck.questions[questionNumber-1].answer}</Text>
-            <TouchableOpacity onPress={this.changeToQuestion} style={styles.qaTextContainer}>
-              <Text style={styles.qaText}>Question</Text>
-            </TouchableOpacity>
-          </View>
+              <Text style={styles.lgText}>{deck.questions[questionNumber-1].answer}</Text>
+              <TouchableOpacity onPress={this.changeToQuestion} style={styles.qaTextContainer}>
+                <Text style={styles.qaText}>Show Question</Text>
+              </TouchableOpacity>
+            </View>
           )}
         </View>
         <TouchableOpacity
@@ -139,7 +143,9 @@ const styles = StyleSheet.create({
     height: 300
   },
   lgText: {
-    fontSize: 20
+    fontSize: 20,
+    alignItems: 'center',
+    alignSelf: 'center'
   },
   smText: {
     fontSize: 18

@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 
 import reducer from './reducers'
 import Navigation from './components/Navigation'
+import { setLocalNotification } from './utils/notifications'
 
 function CustomStatusBar ({ backgroundColor, ...props }) {
   return (
@@ -16,6 +17,9 @@ function CustomStatusBar ({ backgroundColor, ...props }) {
 }
 
 export default class App extends Component {
+  componentDidMount() {
+    setLocalNotification()
+  }
   render () {
     return (
       <Provider store={createStore(reducer)}>

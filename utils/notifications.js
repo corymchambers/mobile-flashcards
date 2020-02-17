@@ -14,13 +14,10 @@ function createNotification () {
     title: 'Complete a Quiz!',
     body: "Don't forget to complete at least 1 quiz today!",
     ios: {
-      sound: true,
+      sound: false,
     },
     android: {
-      sound: true,
-      priority: 'high',
-      sticky: false,
-      vibrate: true,
+      sound: false,
     }
   }
 }
